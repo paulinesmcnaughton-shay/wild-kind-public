@@ -1,0 +1,201 @@
+export const colors = {
+  // Brand greens — primary (dark), secondary (light), deep (button shadow)
+  green:      '#1a3d2b',
+  greenLight: '#52b788',
+  greenDeep:  '#0f2419',
+  /** @deprecated Use `greenLight` for secondary; `greenDeep` for button depth */
+  greenDark:  '#52b788',
+  lime:       '#A4DE3A',
+  // Brand accents
+  coral:      '#FF6B5B',
+  coralDeep:  '#E04A39',
+  sun:        '#FFC93C',
+  sky:        '#5BC0EB',
+  skyDeep:    '#2A8FB8',
+  plum:       '#A855F7',
+  earth:      '#92633A',
+  earthLight: '#D4B896',
+  /** Map user location dot + heading beam */
+  mapUser:    '#d4a853',
+  // Text
+  ink:        '#152130',
+  ink2:       '#33455A',
+  dim:        '#7388A0',
+  // Surfaces
+  bg:         '#FFF8E7',
+  bg2:        '#FFFBF0',
+  canvas:     '#FFF8E7',
+  card:       '#FFFFFF',
+  hairline:   '#E7EDF3',
+  /** Toggle switch track — off (use with `greenLight` for on). See `ToggleSwitch`. */
+  switchOff:  '#B5C2CE',
+
+  // ── Home redesign palette (Safari hifi) — used by the new home cards ──
+  inkGreen:    '#16321F', // redesign primary dark green (CTAs, FAB, headings)
+  cream:       '#FBF1DA', // redesign surface
+  forest:      '#1E5C3A', // section meta labels, LVL accent
+  muted:       '#9AA49E', // secondary text on redesign cards
+  slate:       '#8A93A0', // stat labels
+  gold:        '#FAD24E',
+  goldDeep:    '#F0B814',
+  goldBevel:   '#B98708',
+  goldInk:     '#3A2A00', // text on gold buttons
+  flame:       '#E9604A', // streak flame / coral pills (redesign)
+  flameSoft:   '#FBE3D8', // coral-soft pill bg
+  grape:       '#7B3FE4',
+  grapeLight:  '#9B5DE5',
+  grapeDeep:   '#5B2BC9',
+  badgePurple: '#7C5CFC',
+} as const
+
+/** @deprecated Use `colors` */
+export const color = {
+  ...colors,
+  hair: colors.hairline,
+  black: '#000000',
+} as const
+
+const cardDropShadow = {
+  shadowColor: '#152130',
+  shadowOffset: { width: 0, height: 14 },
+  shadowOpacity: 0.22,
+  shadowRadius: 32,
+  elevation: 14,
+} as const
+
+export const shadow = {
+  /** Default for all content cards (species profile, dex grid, vitals, home, etc.). */
+  card: cardDropShadow,
+  /** @deprecated Use `shadow.card` — identical values. */
+  dexCard: cardDropShadow,
+  /** Creature of the day / featured hero cards. */
+  featured: {
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.25,
+    shadowRadius: 28,
+    elevation: 12,
+  },
+  pop: {
+    shadowColor: '#152130',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.12,
+    shadowRadius: 24,
+    elevation: 8,
+  },
+  /** Bottom sheets — casts upward so white cards read on light maps */
+  sheetUp: {
+    shadowColor: '#152130',
+    shadowOffset: { width: 0, height: -6 },
+    shadowOpacity: 0.18,
+    shadowRadius: 20,
+    elevation: 12,
+  },
+} as const
+
+/** Shadow wrapper for hero/profile cards — use on an outer View with borderRadius. */
+export const profileCardShadow = {
+  backgroundColor: 'transparent',
+  ...cardDropShadow,
+} as const
+
+/**
+ * Layout spacing — 4pt grid up to 24px; above 24 use multiples of 8 (32, 40, 48…).
+ * Never use raw pixel literals for margin, padding, or gap.
+ */
+export const space = {
+  4: 4,
+  8: 8,
+  16: 16,
+  24: 24,
+  32: 32,
+  40: 40,
+  48: 48,
+  56: 56,
+  64: 64,
+  72: 72,
+  80: 80,
+} as const
+
+export const radius = { sm:8, md:14, lg:18, xl:22, xxl:28, pill:999 } as const
+
+export const type = {
+  display: { family: 'BricolageGrotesque-ExtraBold', weight: '800' as const },
+  body: { family: 'Nunito', weights: { regular:'400', medium:'500', bold:'700', extra:'800', black:'900' } },
+  size: { displayXL:48, displayLG:36, displayMD:30, displaySM:22, title:18, bodyLG:17, body:15, bodySM:14, label:13, caption:12, micro:11 },
+} as const
+
+/**
+ * Duolingo-style CTA button tokens — bottom-shadow motif.
+ *
+ * Primary:   solid green face, deep green shadow
+ * Secondary: white fill, dark green border + text + shadow
+ *
+ * Usage:
+ *   <View style={ctaButton.primaryShadow}>
+ *     <Pressable style={({ pressed }) => [ctaButton.primaryFace, pressed && ctaButton.pressed]}>
+ *       <Text style={ctaButton.primaryText}>Label</Text>
+ *     </Pressable>
+ *   </View>
+ */
+export const ctaButton = {
+  primaryShadow: {
+    backgroundColor: colors.greenDeep,
+    borderRadius: radius.lg,
+    paddingBottom: 4,
+  },
+  primaryFace: {
+    backgroundColor: colors.green,
+    borderRadius: radius.lg,
+    paddingVertical: space[16],
+    alignItems: 'center' as const,
+    justifyContent: 'center' as const,
+  },
+  primaryText: {
+    color: colors.card,
+    fontSize: type.size.displaySM,
+    letterSpacing: 0.3,
+    textTransform: 'uppercase' as const,
+  },
+  secondaryShadow: {
+    backgroundColor: colors.greenDeep,
+    borderRadius: radius.lg,
+    paddingBottom: 4,
+  },
+  secondaryFace: {
+    backgroundColor: colors.card,
+    borderWidth: 1.5,
+    borderColor: colors.green,
+    borderRadius: radius.lg,
+    paddingVertical: space[16],
+    alignItems: 'center' as const,
+    justifyContent: 'center' as const,
+  },
+  secondaryText: {
+    color: colors.green,
+    fontSize: type.size.displaySM,
+    letterSpacing: 0.3,
+    textTransform: 'uppercase' as const,
+  },
+  disabledShadow: {
+    backgroundColor: colors.hairline,
+    borderRadius: radius.lg,
+    paddingBottom: 4,
+  },
+  disabledFace: {
+    backgroundColor: '#E4E9EE',
+    borderRadius: radius.lg,
+    paddingVertical: space[16],
+    alignItems: 'center' as const,
+    justifyContent: 'center' as const,
+  },
+  disabledText: {
+    color: colors.switchOff,
+    fontSize: type.size.displaySM,
+    letterSpacing: 0.3,
+    textTransform: 'uppercase' as const,
+  },
+  pressed: {
+    transform: [{ translateY: 2 }],
+  },
+} as const
